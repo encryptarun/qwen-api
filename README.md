@@ -350,23 +350,6 @@ Tool calling still instructs Qwen to emit XML as the primary format:
 `<tool_calls>[{"name":"tool_name","arguments":{}}]</tool_calls>`.
 Internally, the proxy also accepts a few fallback formats from Qwen output and maps qwen-safe tool aliases back to the original client tool names. External clients should continue sending normal OpenAI `tools`, `tool_choice`, and `messages`; response `tool_calls` use the original names.
 
-### Code Generation (qwen3-coder-plus)
-
-Note: `qwen3-coder-plus` supports [Qwen Code](https://github.com/QwenLM/qwen-code) — a coding agent that operates in digital environments and can issue function/tool calls. This API supports handling the function calls produced by the agent.
-
-```javascript
-const response = await fetch("https://qwen.aikit.club/v1/chat/completions", {
-  method: "POST",
-  headers: headers,
-  body: JSON.stringify({
-    model: "qwen3-coder-plus",
-    tools: [{ type: "code" }],
-    messages: [{ role: "user", content: "Write a JavaScript function to add two numbers" }],
-    stream: true,
-  }),
-});
-```
-
 ### Video Generation
 
 ```javascript
