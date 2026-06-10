@@ -73,7 +73,7 @@ Qwen API Proxy acts as a bridge between Qwen AI's proprietary API and the widely
 | Model Name                 | 👁️ Vision | 💡 Reasoning | 🌐 Web Search | 🔧 Tool Calling |
 | -------------------------- | --------- | ------------ | ------------- | --------------- |
 | Qwen3.7-Max                | ✅        | ✅           | ✅            | ✅              |
-| Qwen3.7-Plus               | ✅        | ✅           | ✅            | ❌              |
+| Qwen3.7-Plus               | ✅        | ✅           | ✅            | ✅              |
 | Qwen3.6-Plus               | ✅        | ✅           | ✅            | ✅              |
 | Qwen3.6-Max-Preview        | ❌        | ✅           | ❌            | ✅              |
 | Qwen3.6-35B-A3B            | ✅        | ✅           | ✅            | ❌              |
