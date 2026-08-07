@@ -66,51 +66,39 @@ Qwen API Proxy acts as a bridge between Qwen AI's proprietary API and the widely
 | `/v1/videos/generations` | POST        | Generate videos       |
 | `/v1/chats/delete`       | DELETE/POST | Delete all chats      |
 
-## 🧠 Model Capabilities
+## 🧠 Currently Available Models
 
-## 🧠 Model Capabilities
+| Model ID                           | Model Name               | 👁️ Vision | 💡 Thinking | 🌐 Search | 🔧 Tools |
+| ---------------------------------- | ------------------------ | --------- | ----------- | --------- | -------- |
+| `qwen3.8-max`                      | Qwen3.8-Max              | ✅        | ✅          | ✅        | ✅       |
+| `qwen3.8-max-preview`              | Qwen3.8-Max-Preview      | ✅        | ✅          | ✅        | ✅       |
+| `qwen3.7-plus`                     | Qwen3.7-Plus             | ✅        | ✅          | ✅        | ✅       |
+| `qwen3.7-max`                      | Qwen3.7-Max              | ❌        | ✅          | ❌        | ✅       |
+| `qwen3.6-plus`                     | Qwen3.6-Plus             | ✅        | ✅          | ✅        | ✅       |
+| `qwen3.6-max-preview`              | Qwen3.6-Max-Preview      | ❌        | ✅          | ❌        | ✅       |
+| `qwen3.6-35b-a3b`                  | Qwen3.6-35B-A3B          | ✅        | ✅          | ✅        | ✅       |
+| `qwen3.6-27b`                      | Qwen3.6-27B              | ✅        | ✅          | ❌        | ✅       |
+| `qwen3.5-plus`                     | Qwen3.5-Plus             | ✅        | ✅          | ✅        | ✅       |
+| `qwen3.5-flash`                    | Qwen3.5-Flash            | ✅        | ✅          | ✅        | ✅       |
+| `qwen3.5-397b-a17b`                | Qwen3.5-397B-A17B        | ✅        | ✅          | ✅        | ✅       |
+| `qwen3.5-omni-plus`                | Qwen3.5-Omni-Plus        | ✅        | ❌          | ❌        | ❌       |
+| `qwen3.5-omni-flash`               | Qwen3.5-Omni-Flash       | ✅        | ❌          | ❌        | ❌       |
+| `qwen3-max-2026-01-23`             | Qwen3-Max                | ✅        | ✅          | ✅        | ✅       |
+| `qwen-plus-2025-07-28`             | Qwen3-235B-A22B-2507     | ✅        | ✅          | ❌        | ✅       |
+| `qwen3-coder-plus`                 | Qwen3-Coder              | ✅        | ❌          | ❌        | ✅       |
+| `qwen3-vl-plus`                    | Qwen3-VL-235B-A22B       | ✅        | ✅          | ❌        | ❌       |
+| `qwen3-omni-flash-2025-12-01`      | Qwen3-Omni-Flash         | ✅        | ✅          | ❌        | ❌       |
 
-| Model Name                 | 👁️ Vision | 💡 Reasoning | 🌐 Web Search | 🔧 Tool Calling |
-| -------------------------- | --------- | ------------ | ------------- | --------------- |
-| Qwen3.8-Max                | ✅        | ✅           | ✅            | ✅              |
-| Qwen3.8-Max-Preview        | ✅        | ✅           | ✅            | ✅              |
-| Qwen3.7-Max                | ✅        | ✅           | ✅            | ✅              |
-| Qwen3.7-Plus               | ✅        | ✅           | ✅            | ✅              |
-| Qwen3.6-Plus               | ✅        | ✅           | ✅            | ✅              |
-| Qwen3.6-Max-Preview        | ❌        | ✅           | ❌            | ✅              |
-| Qwen3.6-35B-A3B            | ✅        | ✅           | ✅            | ❌              |
-| Qwen3.6-27B                | ✅        | ✅           | ❌            | ❌              |
-| Qwen3.5-Plus               | ✅        | ✅           | ✅            | ✅              |
-| Qwen3.5-Max-Preview        | ✅        | ✅           | ✅            | ✅              |
-| Qwen3.5-Flash              | ✅        | ✅           | ✅            | ✅              |
-| Qwen3.5-397B-A17B          | ✅        | ✅           | ✅            | ✅              |
-| Qwen3.5-122B-A10B          | ✅        | ✅           | ✅            | ❌              |
-| Qwen3.5-35B-A3B            | ✅        | ✅           | ✅            | ❌              |
-| Qwen3.5-27B                | ✅        | ✅           | ✅            | ❌              |
-| Qwen3.5-Omni-Plus          | ✅        | ❌           | ✅            | ❌              |
-| Qwen3.5-Omni-Flash         | ✅        | ❌           | ✅            | ❌              |
-| Qwen3-Max                  | ❌        | ✅           | ✅            | ✅              |
-| Qwen3-Coder                | ✅        | ❌           | ✅            | ✅              |
-| Qwen3-Coder-Flash          | ✅        | ❌           | ✅            | ❌              |
-| Qwen3-235B-A22B-2507       | ✅        | ✅           | ✅            | ✅              |
-| Qwen3-30B-A3B-2507         | ✅        | ✅           | ✅            | ❌              |
-| Qwen3-Omni-Flash           | ✅        | ✅           | ✅            | ❌              |
-| Qwen3-VL-235B-A22B         | ✅        | ✅           | ❌            | ❌              |
-| Qwen3-VL-32B               | ✅        | ✅           | ✅            | ❌              |
-| Qwen3-VL-30B-A3B           | ✅        | ✅           | ❌            | ❌              |
-| Qwen3-Next-80B-A3B         | ✅        | ✅           | ✅            | ❌              |
-| Qwen2.5-Max                | ✅        | ✅           | ✅            | ❌              |
-| Qwen2.5-Plus               | ✅        | ✅           | ✅            | ❌              |
-| Qwen2.5-Turbo              | ✅        | ✅           | ✅            | ❌              |
-| Qwen2.5-Coder-32B-Instruct | ✅        | ✅           | ✅            | ❌              |
-| Qwen2.5-VL-32B-Instruct    | ✅        | ✅           | ✅            | ❌              |
-| Qwen2.5-Omni-7B            | ✅        | ❌           | ✅            | ❌              |
-| Qwen-Image                 | ✅        | ❌           | ❌            | ❌              |
-| Qwen-Video                 | ✅        | ❌           | ❌            | ❌              |
-| Qwen-Deep-Research         | ❌        | ✅           | ❌            | ❌              |
-| Qwen-Web-Dev               | ✅        | ✅           | ❌            | ❌              |
-| Qwen-Full-Stack            | ✅        | ✅           | ❌            | ❌              |
-| Qwen-Slides                | ✅        | ✅           | ❌            | ❌              |
+### Specialized Models
+
+| Model ID             | Purpose                                |
+| -------------------- | -------------------------------------- |
+| `qwen-image`         | Image generation and editing           |
+| `qwen-video`         | Video generation and understanding     |
+| `qwen-deep-research` | Deep research and report generation    |
+| `qwen-web-dev`       | Web development                        |
+| `qwen-full-stack`    | Full-stack application development     |
+| `qwen-slides`        | Presentation generation                |
 
 ## 🚀 Quick Start
 
