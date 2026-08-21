@@ -126,7 +126,7 @@ For quick testing, you can use this temporary token until it expires.
 - Token:
 
 ```
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdjODlhMTFjLWNlMjgtNGI0Ny05ODg4LTExN2Q2ZWYxOTQwMiIsImxhc3RfcGFzc3dvcmRfY2hhbmdlIjoxNzg0NjM2ODE4LCJleHAiOjE3ODk0MzUyNjF9.RSH1-fRfzDSt8S57Jjsze6vhznRVh4EUoFM9VvFPiHA
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZlOTJhNzQxLTFlNmItNDg0MS05ODJlLTViNmM1OTczODJhMCIsImxhc3RfcGFzc3dvcmRfY2hhbmdlIjoxNzg3MjkzNjEyLCJleHAiOjE3ODk4ODU2Mzh9.kyffX2LC1K7xlq6ky0svTZiLeYeyxlXBTFxYRq7S938
 ```
 
 - Expires: 2026-09-15 01:21:01 UTC (2026-09-15 06:51:01 IST, UTC+05:30)
