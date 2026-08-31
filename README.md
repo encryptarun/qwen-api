@@ -1,9 +1,12 @@
 <div align="center">
   <img src="https://assets.alicdn.com/g/qwenweb/qwen-webui-fe/0.0.201/favicon.png" alt="Qwen Logo" width="120" height="120">
+
   <h1>Qwen API</h1>
+
   <p>
     <strong>OpenAI-compatible API endpoints for Qwen AI</strong>
   </p>
+
   <p>
     <a href="#-key-features">Features</a> •
     <a href="#-quick-start">Quick Start</a> •
@@ -12,14 +15,34 @@
     <a href="#-usage-examples">Usage Examples</a> •
     <a href="#-license">License</a>
   </p>
+
   <br/>
 </div>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/MAJOR_UPDATE-August_31,_2026-7c3aed?style=for-the-badge" alt="Major Update">
+</p>
+
+> [!IMPORTANT]
+> ### 🚀 Major Update — August 31, 2026
+>
+> - Fixed image generation and editing; added `url` and `b64_json` outputs.
+> - Added text-to-video and image-to-video with URL, base64, or uploaded image input.
+> - Fixed conversation history and follow-ups across Chat, Web Dev, Full Stack, Slides, and Deep Research.
+> - Added Fast, Auto, and Thinking modes with OpenAI `reasoning_effort` support.
+> - Improved web search with clickable citations and OpenAI-compatible annotations.
+> - Expanded multimodal support for images, audio, video, PDF, PPTX, DOCX, and other documents.
+> - Upgraded Deep Research with normal/advanced modes, media attachments, reasoning output, citations, and PDF/Markdown downloads.
+> - Added Slides generation with preview images and downloadable PDF.
+> - Improved tool calling, model compatibility, validation, and OpenAI-style error responses.
+
 ## 🌟 Overview
 
-Qwen API Proxy acts as a bridge between Qwen AI's proprietary API and the widely-adopted OpenAI API format. This allows developers to seamlessly integrate Qwen's advanced AI capabilities into their applications using familiar OpenAI-compatible endpoints.
+Qwen API bridges the `chat.qwen.ai` Web API with familiar OpenAI-compatible endpoints. It supports Chat Completions, multimodal inputs, web search, reasoning summaries, function calling, image and video generation, Deep Research, Web Development, Full-Stack artifacts, and Slides.
 
 > **Note**: This is an unofficial proxy and not affiliated with Alibaba Cloud or Qwen AI.
+
+> **Compatibility scope**: The primary compatibility target is OpenAI Chat Completions plus Images-style generation responses. Qwen-specific capabilities use documented extensions such as `thinking_mode`, `reasoning_content`, `file_url`, and `video_url`.
 
 ## 📘 OpenAPI Docs
 
@@ -40,7 +63,7 @@ Qwen API Proxy acts as a bridge between Qwen AI's proprietary API and the widely
 | 💬 **Chat Completions**     | Text-based conversations with all Qwen models              |
 | 🎨 **Image Generation**     | Create stunning images from text prompts                   |
 | ✏️ **Image Editing**        | Modify existing images with text instructions              |
-| 🎬 **Video Generation**     | Transform text into video content                          |
+| 🎬 **Video Generation**     | Transform text or images into video content                |
 | 🔬 **Deep Research**        | Comprehensive research with web search and citations       |
 | 👨🏻‍💻 **Web Development**      | Generate interactive web components and UI elements        |
 | 🏗️ **Full-Stack Apps**      | Complete application development from frontend to backend  |
@@ -66,28 +89,19 @@ Qwen API Proxy acts as a bridge between Qwen AI's proprietary API and the widely
 | `/v1/videos/generations` | POST        | Generate videos       |
 | `/v1/chats/delete`       | DELETE/POST | Delete all chats      |
 
+Unknown routes redirect to `https://chat.qwen.ai`. API errors use an OpenAI-style `{ "error": { ... } }` envelope.
+
 ## 🧠 Currently Available Models
 
 | Model ID                           | Model Name               | 👁️ Vision | 💡 Thinking | 🌐 Search | 🔧 Tools |
 | ---------------------------------- | ------------------------ | --------- | ----------- | --------- | -------- |
 | `qwen3.8-max`                      | Qwen3.8-Max              | ✅        | ✅          | ✅        | ✅       |
-| `qwen3.8-max-preview`              | Qwen3.8-Max-Preview      | ✅        | ✅          | ✅        | ✅       |
 | `qwen3.7-plus`                     | Qwen3.7-Plus             | ✅        | ✅          | ✅        | ✅       |
 | `qwen3.7-max`                      | Qwen3.7-Max              | ❌        | ✅          | ❌        | ✅       |
 | `qwen3.6-plus`                     | Qwen3.6-Plus             | ✅        | ✅          | ✅        | ✅       |
-| `qwen3.6-max-preview`              | Qwen3.6-Max-Preview      | ❌        | ✅          | ❌        | ✅       |
-| `qwen3.6-35b-a3b`                  | Qwen3.6-35B-A3B          | ✅        | ✅          | ✅        | ✅       |
-| `qwen3.6-27b`                      | Qwen3.6-27B              | ✅        | ✅          | ❌        | ✅       |
 | `qwen3.5-plus`                     | Qwen3.5-Plus             | ✅        | ✅          | ✅        | ✅       |
-| `qwen3.5-flash`                    | Qwen3.5-Flash            | ✅        | ✅          | ✅        | ✅       |
-| `qwen3.5-397b-a17b`                | Qwen3.5-397B-A17B        | ✅        | ✅          | ✅        | ✅       |
 | `qwen3.5-omni-plus`                | Qwen3.5-Omni-Plus        | ✅        | ❌          | ❌        | ❌       |
-| `qwen3.5-omni-flash`               | Qwen3.5-Omni-Flash       | ✅        | ❌          | ❌        | ❌       |
-| `qwen3-max-2026-01-23`             | Qwen3-Max                | ✅        | ✅          | ✅        | ✅       |
-| `qwen-plus-2025-07-28`             | Qwen3-235B-A22B-2507     | ✅        | ✅          | ❌        | ✅       |
 | `qwen3-coder-plus`                 | Qwen3-Coder              | ✅        | ❌          | ❌        | ✅       |
-| `qwen3-vl-plus`                    | Qwen3-VL-235B-A22B       | ✅        | ✅          | ❌        | ❌       |
-| `qwen3-omni-flash-2025-12-01`      | Qwen3-Omni-Flash         | ✅        | ✅          | ❌        | ❌       |
 
 ### Specialized Models
 
@@ -198,7 +212,7 @@ javascript: (function () {
 
 ### Validate Token (from JS snippet)
 
-Validate the access token produced by the browser JS snippet above.
+Validate the access_token produced by the browser JS snippet above.
 
 ```bash
 curl -X POST https://qwen.aikit.club/validate \
@@ -219,12 +233,22 @@ const response = await fetch("https://qwen.aikit.club/v1/chat/completions", {
   method: "POST",
   headers: headers,
   body: JSON.stringify({
-    model: "qwen-max-latest",
+    model: "qwen3.8-max",
     messages: [{ role: "user", content: "Hello, how are you?" }],
     stream: false,
   }),
 });
 ```
+
+### Conversation Follow-Ups
+
+Responses include hidden continuation metadata inside the assistant content:
+
+```html
+<!-- qwen_metadata: {"response_id":"...","request_id":"..."} -->
+```
+
+Keep the complete assistant response in the next `messages` array. The proxy extracts this metadata, continues the same upstream Qwen chat, and removes the metadata before sending conversation text upstream. This enables follow-ups for normal chat, Web Development, Full-Stack artifacts, Slides, and Deep Research.
 
 ### Image Generation
 
@@ -239,13 +263,18 @@ const response = await fetch("https://qwen.aikit.club/v1/images/generations", {
 });
 ```
 
+Set `response_format` to `"b64_json"` to receive `data[0].b64_json` instead of a temporary URL. The default is `"url"`.
+
 ### Image Editing
+
+Image editing accepts exactly one source image. Requests containing multiple `image`/`image[]` fields or a JSON image array are rejected with HTTP 400.
 
 ```javascript
 // Using FormData for file upload
 const formData = new FormData();
 formData.append("image", imageFile); // File object
 formData.append("prompt", "Change the sky to a starry night");
+formData.append("response_format", "b64_json"); // Optional; default is "url"
 
 const response = await fetch("https://qwen.aikit.club/v1/images/edits", {
   method: "POST",
@@ -273,24 +302,35 @@ const response = await fetch("https://qwen.aikit.club/v1/chat/completions", {
   method: "POST",
   headers: headers,
   body: JSON.stringify({
-    model: "qwen-max-latest",
+    model: "qwen3.8-max",
     messages: [{ role: "user", content: "What are the latest AI developments?" }],
-    tools: [{ type: "web_search" }],
+    web_search_options: { search_context_size: "medium" },
   }),
 });
 ```
 
+The legacy `tools: [{ type: "web_search" }]` form remains supported for backward compatibility.
+
 ### Thinking Mode
+
+Use `thinking_mode` to select Qwen's current reasoning behavior:
+
+- `fast` (default): No thinking summary; returns the answer directly.
+- `auto`: Qwen decides whether to reason and returns any summary as OpenAI-compatible `reasoning_content`.
+- `thinking`: Forces reasoning and returns the summary as OpenAI-compatible `reasoning_content`.
+
+The legacy `enable_thinking` flag remains supported: `true` maps to `thinking` and `false` maps to `fast`. The former `thinking_budget` parameter is no longer sent upstream.
+
+OpenAI Chat Completions SDKs can use the standard `reasoning_effort` field. The proxy maps `none`/`minimal` to `fast`, `low`/`medium` to `auto`, and `high`/`xhigh`/`max` to `thinking`. If multiple controls are supplied, precedence is `thinking_mode`, then `reasoning_effort`, then legacy `enable_thinking`.
 
 ```javascript
 const response = await fetch("https://qwen.aikit.club/v1/chat/completions", {
   method: "POST",
   headers: headers,
   body: JSON.stringify({
-    model: "qwen-max-latest",
+    model: "qwen3.8-max",
     messages: [{ role: "user", content: "Solve this complex math problem: ..." }],
-    enable_thinking: true,
-    thinking_budget: 30000,
+    reasoning_effort: "high",
   }),
 });
 ```
@@ -299,7 +339,7 @@ const response = await fetch("https://qwen.aikit.club/v1/chat/completions", {
 
 Qwen's web API (`chat.qwen.ai`) does not natively support tool/function calling — unlike the official DashScope API, the web reverse API has no built-in tool calling capability. This proxy bridges that gap by implementing **OpenAI-compatible tool calling** via prompt engineering with XML-based parsing, enabling standard OpenAI `tools` and `tool_choice` parameters on the web API.
 
-**Supported Models**: `Qwen3.6-Plus`, `Qwen3.5-Plus`, `Qwen3.5-Flash`, `Qwen3.5-397B-A17B`, `Qwen3-Max`, `Qwen3-235B-A22B-2507`
+**Supported model IDs**: `qwen3.8-max`, `qwen3.7-plus`, `qwen3.7-max`, `qwen3.6-plus`, `qwen3.5-plus`, `qwen3-coder-plus`
 
 ```javascript
 const response = await fetch("https://qwen.aikit.club/v1/chat/completions", {
@@ -342,6 +382,8 @@ Internally, the proxy also accepts a few fallback formats from Qwen output and m
 
 ### Video Generation
 
+The same endpoint performs text-to-video when `image` is omitted and image-to-video when it is provided. `prompt` is required; `image`, `size`, and `response_format` are optional. Image-to-video accepts at most one source image; repeated `image`/`image[]` fields or a JSON image array are rejected with HTTP 400. `response_format: "b64_json"` returns the complete MP4 in `data[0].b64_json`; this is a proxy extension because OpenAI's Videos API downloads bytes through a separate content endpoint. The default remains `"url"`.
+
 ```javascript
 const response = await fetch("https://qwen.aikit.club/v1/videos/generations", {
   method: "POST",
@@ -353,7 +395,40 @@ const response = await fetch("https://qwen.aikit.club/v1/videos/generations", {
 });
 ```
 
+For image-to-video, pass an image URL or base64 data URL in JSON:
+
+```javascript
+const response = await fetch("https://qwen.aikit.club/v1/videos/generations", {
+  method: "POST",
+  headers: headers,
+  body: JSON.stringify({
+    prompt: "The subject slowly turns toward the camera",
+    image: "https://example.com/source.jpg",
+    size: "16:9",
+  }),
+});
+```
+
+Or upload a local image with multipart form data:
+
+```javascript
+const formData = new FormData();
+formData.append("prompt", "The subject slowly turns toward the camera");
+formData.append("image", imageFile);
+formData.append("size", "16:9");
+
+const response = await fetch("https://qwen.aikit.club/v1/videos/generations", {
+  method: "POST",
+  headers: { Authorization: "Bearer YOUR_QWEN_ACCESS_TOKEN" },
+  body: formData,
+});
+```
+
 ### Deep Research
+
+Deep Research supports the same image, audio, video, and document attachments as normal multimodal chat, using the same URL/base64 upload flow. `tools` and `web_search_options` are not supported. Research planning is returned as OpenAI-compatible `reasoning_content`, while the completed report is returned as normal assistant `content` with citation and download links.
+
+The default is normal research. Use the standard OpenAI `reasoning_effort` field with `medium`, `high`, `xhigh`, or `max` to select advance research. Omitted, `none`, `minimal`, or `low` use normal research. For compatibility, `thinking_mode: "thinking"` or `enable_thinking: true` also select advance research; `thinking_mode: "fast"`/`"auto"` or `enable_thinking: false` select normal research. Precedence is `thinking_mode`, then `reasoning_effort`, then `enable_thinking`; `thinking_budget` is ignored. The first turn may ask clarifying questions; include its assistant response in the next Chat Completions request so the hidden metadata can continue the same Deep Research chat.
 
 ```javascript
 const response = await fetch("https://qwen.aikit.club/v1/chat/completions", {
@@ -548,8 +623,6 @@ const response = await fetch("https://qwen.aikit.club/v1/chat/completions", {
       },
     ],
     stream: true,
-    enable_thinking: true,
-    thinking_budget: 30000,
   }),
 });
 ```
@@ -568,39 +641,51 @@ const response = await fetch("https://qwen.aikit.club/v1/chats/delete", {
 
 The API supports various file formats for comprehensive multimodal interactions:
 
-> **⚠️ Important Limitation**: Multiple inputs of the same modality category are not supported. **Image, Audio, and Video** are considered the same category (media files), while **Documents** (PDF, TXT, etc.) are a separate category. You can combine different categories (e.g., image + PDF) but cannot combine files within the same category (e.g., image + video).
+> **⚠️ Important Limitation**: **Image, Audio, and Video are different media types within the media group. Do not mix different media types in one request** (for example, image + audio, image + video, or audio + video). Multiple images are allowed, while audio and video are limited to one file each. Documents are a separate group and may be combined with one supported media type (for example, image + PDF or audio + DOCX), subject to the limits below.
 
 ### Supported File Types
 
-- **Media Files** _(same category)_:
+- **Media Files** _(media group)_:
   - **Images**: **JPG, PNG, GIF, WebP** _(most common)_, BMP, TIFF, ICO, ICNS, JFIF, JP2
   - **Audio**: **MP3, WAV, M4A, AAC** _(most common)_, AMR
   - **Video**: **MP4, MOV, AVI, MKV** _(most common)_, WMV, FLV
-- **Documents** _(separate category)_: **PDF, TXT, MD** _(most common)_, DOC, DOCX, CSV, XLS, XLSX
+- **Documents** _(separate category)_: **PDF, TXT, MD** _(most common)_, DOC, DOCX, PPT, PPTX, CSV, XLS, XLSX
 
 > **💡 Tip**: Bold formats are the most commonly used and recommended for best compatibility.
 
 ### 📏 File Limits
 
-The following limits apply to multimodal file uploads:
+The following Qwen live runtime limits apply to multimodal file uploads. The proxy forwards uploads to Qwen and does not pre-enforce these limits itself. A selected model's `file_limits` configuration may override these defaults:
 
 | File Type     | Max Size (MB) | Max Count | Max Duration (seconds) |
 | ------------- | ------------- | --------- | ---------------------- |
-| **Images**    | 10            | 5         | -                      |
-| **Audio**     | 100           | 1         | 180                    |
-| **Video**     | 500           | 1         | 600                    |
+| **Images**    | 20            | 5         | -                      |
+| **Audio**     | 2,000         | 1         | 10,800                 |
+| **Video**     | 2,000         | 1         | 3,600                  |
 | **Documents** | 20            | 5         | -                      |
 | **Default**   | 20            | -         | -                      |
 
-> **📋 Summary**: You can upload up to 5 images (10MB each), 1 audio file (100MB, 3 minutes), 1 video file (500MB, 10 minutes), or 5 documents (20MB each) per request.
+> **📋 Summary**: You can upload up to 5 images (20 MB each), 1 audio file (2,000 MB, 3 hours), 1 video file (2,000 MB, 1 hour), or 5 documents (20 MB each) per request.
+
+Additional Qwen limits:
+
+- **Agent Mode**: Maximum 10 files, 20 MB per file, and 50 MB total.
+- **Image Edit**: Exactly 1 input image through this proxy.
+- **Model overrides**: The selected model's live `file_limits` configuration takes precedence over the defaults above.
+
+> **Upload fallback**: Attachment handling is best-effort. If an attachment cannot be downloaded or uploaded, the proxy skips that attachment and continues the request as text-only so the user can still receive a response.
 
 ### ✅ Valid Combinations
 
 - ✅ Multiple images
+- ✅ Multiple documents
 - ✅ Image + PDF
+- ✅ Image + DOCX/PPTX
 - ✅ Audio + PDF
+- ✅ Audio + DOCX/PPTX
 - ✅ Video + PDF
-- ✅ Single image/audio/video only
+- ✅ Video + DOCX/PPTX
+- ✅ A single image, audio, or video
 
 ### ❌ Invalid Combinations
 
@@ -618,7 +703,7 @@ const response = await fetch("https://qwen.aikit.club/v1/chat/completions", {
   method: "POST",
   headers: headers,
   body: JSON.stringify({
-    model: "qwen-max-latest",
+    model: "qwen3.8-max",
     messages: [
       {
         role: "user",
@@ -646,7 +731,7 @@ const response = await fetch("https://qwen.aikit.club/v1/chat/completions", {
   method: "POST",
   headers: headers,
   body: JSON.stringify({
-    model: "qwen-max-latest",
+    model: "qwen3.8-max",
     messages: [
       {
         role: "user",
@@ -675,7 +760,7 @@ const response = await fetch("https://qwen.aikit.club/v1/chat/completions", {
   method: "POST",
   headers: headers,
   body: JSON.stringify({
-    model: "qwen-max-latest",
+    model: "qwen3.8-max",
     messages: [
       {
         role: "user",
@@ -697,6 +782,14 @@ const response = await fetch("https://qwen.aikit.club/v1/chat/completions", {
 });
 ```
 
+## ⚠️ Important Limitations
+
+- This project wraps the `chat.qwen.ai` Web API, not the official DashScope API.
+- Generated image, video, Slides, PDF, and Markdown URLs may be signed or temporary. Download important assets promptly or request `b64_json` where supported.
+- Image editing accepts exactly one input image. Image-to-video accepts at most one source image.
+- Deep Research first collects the complete upstream research response, then returns/re-streams formatted `reasoning_content` followed by final `content`.
+- Upload processing is best-effort: an attachment that cannot be downloaded or uploaded may be skipped so the request can continue as text.
+
 ## 📜 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
@@ -705,7 +798,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
   <p>
-    Built with ❤️ by Tarun
+    <sub>Built with ❤️ by Tarun</sub>
   </p>
   <p>
     <sub>If you find this project useful, please consider giving it a ⭐ on GitHub!</sub>
