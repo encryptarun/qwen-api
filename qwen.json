@@ -278,7 +278,7 @@
         "properties": {
           "model": {
             "type": "string",
-            "description": "Model ID (e.g., qwen-max-latest, qwen3-coder-plus, qwen-deep-research)"
+            "description": "Model ID (e.g., qwen3.8-max, qwen3-coder-plus, qwen-deep-research)"
           },
           "messages": {
             "type": "array",
@@ -296,13 +296,51 @@
               "$ref": "#/components/schemas/ToolDefinition"
             }
           },
+          "web_search_options": {
+            "type": "object",
+            "description": "OpenAI Chat Completions web-search options. Presence enables Qwen native web search.",
+            "properties": {
+              "search_context_size": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "user_location": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            }
+          },
           "enable_thinking": {
             "type": "boolean",
-            "description": "Enable reasoning/thinking mode"
+            "deprecated": true,
+            "description": "Legacy compatibility flag. true maps to thinking mode; false maps to fast mode. For qwen-deep-research, true selects advance research and false selects normal research. Prefer thinking_mode."
           },
-          "thinking_budget": {
-            "type": "integer",
-            "description": "Thinking budget in ms"
+          "thinking_mode": {
+            "type": "string",
+            "enum": [
+              "fast",
+              "auto",
+              "thinking"
+            ],
+            "default": "fast",
+            "description": "Qwen thinking mode. fast disables reasoning; auto lets Qwen decide; thinking forces summarized reasoning. For qwen-deep-research, thinking selects advance research while fast and auto select normal research. Input handling is case-insensitive."
+          },
+          "reasoning_effort": {
+            "type": "string",
+            "enum": [
+              "none",
+              "minimal",
+              "low",
+              "medium",
+              "high",
+              "xhigh",
+              "max"
+            ],
+            "description": "OpenAI Chat Completions reasoning effort. For normal chat, none/minimal map to fast, low/medium map to auto, and high/xhigh/max map to thinking. For qwen-deep-research, medium/high/xhigh/max select advance research; omitted, none, minimal, or low select normal research."
           }
         },
         "required": [
@@ -321,6 +359,48 @@
           },
           "reasoning_content": {
             "type": "string"
+          },
+          "annotations": {
+            "type": "array",
+            "description": "OpenAI-compatible URL citations for web-search responses",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "url_citation"
+                  ]
+                },
+                "url_citation": {
+                  "type": "object",
+                  "properties": {
+                    "start_index": {
+                      "type": "integer"
+                    },
+                    "end_index": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "start_index",
+                    "end_index",
+                    "title",
+                    "url"
+                  ]
+                }
+              },
+              "required": [
+                "type",
+                "url_citation"
+              ]
+            }
           }
         },
         "required": [
@@ -409,7 +489,13 @@
           "size": {
             "type": "string",
             "example": "1024x1024",
-            "description": "Target size; proxy maps to aspect ratio"
+            "description": "Optional output size. Accepts auto, 1:1, 3:4, 4:3, 16:9, 9:16, or custom WIDTHxHEIGHT. Custom dimensions map to the nearest supported aspect ratio; omitted, blank, or invalid values use auto."
+          },
+          "response_format": {
+            "type": "string",
+            "enum": ["url", "b64_json"],
+            "default": "url",
+            "description": "Return a generated asset URL or base64-encoded image data."
           }
         },
         "required": [
@@ -429,10 +515,18 @@
               "properties": {
                 "url": {
                   "type": "string"
+                },
+                "b64_json": {
+                  "type": "string",
+                  "description": "Base64-encoded generated asset when response_format is b64_json."
+                },
+                "revised_prompt": {
+                  "type": "string"
                 }
               },
-              "required": [
-                "url"
+              "oneOf": [
+                { "required": ["url"] },
+                { "required": ["b64_json"] }
               ]
             }
           }
@@ -449,6 +543,7 @@
             "type": "string"
           },
           "image": {
+            "description": "Exactly one source image. Multiple images are rejected.",
             "oneOf": [
               {
                 "type": "string",
@@ -460,11 +555,49 @@
                 "description": "Data URL base64 image"
               }
             ]
+          },
+          "size": {
+            "type": "string",
+            "example": "auto",
+            "description": "Optional output size. Accepts auto, 1:1, 3:4, 4:3, 16:9, 9:16, or custom WIDTHxHEIGHT. Custom dimensions map to the nearest supported aspect ratio; omitted, blank, or invalid values use auto."
+          },
+          "response_format": {
+            "type": "string",
+            "enum": ["url", "b64_json"],
+            "default": "url",
+            "description": "Return the edited image as a URL or base64-encoded data."
           }
         },
         "required": [
           "prompt",
           "image"
+        ]
+      },
+      "VideoGenerationRequest": {
+        "type": "object",
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "description": "Video generation prompt"
+          },
+          "image": {
+            "type": "string",
+            "description": "Optional single source image URL or base64 data URL. Multiple images are rejected. When provided, performs image-to-video; otherwise text-to-video."
+          },
+          "size": {
+            "type": "string",
+            "example": "16:9",
+            "description": "Optional output size. Accepts auto, 1:1, 3:4, 4:3, 16:9, 9:16, or custom WIDTHxHEIGHT. Custom dimensions map to the nearest supported aspect ratio; omitted, blank, or invalid values use auto."
+          },
+          "response_format": {
+            "type": "string",
+            "enum": ["url", "b64_json"],
+            "default": "url",
+            "description": "Return the generated video as a URL or base64-encoded MP4 data. b64_json is a proxy extension for this synchronous endpoint."
+          }
+        },
+        "required": [
+          "prompt"
         ]
       }
     }
@@ -687,7 +820,7 @@
                 "basic": {
                   "summary": "Basic chat completion",
                   "value": {
-                    "model": "qwen-max-latest",
+                    "model": "qwen3.8-max",
                     "messages": [
                       {
                         "role": "user",
@@ -700,7 +833,7 @@
                 "web_search": {
                   "summary": "Chat with web search tool",
                   "value": {
-                    "model": "qwen-max-latest",
+                    "model": "qwen3.8-max",
                     "tools": [
                       {
                         "type": "web_search"
@@ -718,9 +851,8 @@
                 "thinking": {
                   "summary": "Thinking mode",
                   "value": {
-                    "model": "qwen-max-latest",
-                    "enable_thinking": true,
-                    "thinking_budget": 30000,
+                    "model": "qwen3.8-max",
+                    "reasoning_effort": "high",
                     "messages": [
                       {
                         "role": "user",
@@ -751,7 +883,7 @@
                 "multimodal": {
                   "summary": "Vision-style multimodal",
                   "value": {
-                    "model": "qwen-max-latest",
+                    "model": "qwen3.8-max",
                     "messages": [
                       {
                         "role": "user",
@@ -909,7 +1041,18 @@
                   },
                   "image": {
                     "type": "string",
-                    "format": "binary"
+                    "format": "binary",
+                    "description": "Exactly one source image. Repeating image or using multiple image[] fields is rejected."
+                  },
+                  "size": {
+                    "type": "string",
+                    "example": "auto",
+                    "description": "Optional output size. Accepts auto, 1:1, 3:4, 4:3, 16:9, 9:16, or custom WIDTHxHEIGHT. Custom dimensions map to the nearest supported aspect ratio; omitted, blank, or invalid values use auto."
+                  },
+                  "response_format": {
+                    "type": "string",
+                    "enum": ["url", "b64_json"],
+                    "default": "url"
                   }
                 },
                 "required": [
@@ -965,7 +1108,7 @@
     },
     "/videos/generations": {
       "post": {
-        "summary": "Generate a video from a text prompt",
+        "summary": "Generate a video from text or an optional source image",
         "security": [
           {
             "BearerAuth": []
@@ -976,11 +1119,39 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ImageGenerationRequest"
+                "$ref": "#/components/schemas/VideoGenerationRequest"
               },
               "example": {
                 "prompt": "A cat playing with a ball of yarn in slow motion",
                 "size": "1280x720"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "prompt": {
+                    "type": "string"
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Optional single source image. Repeating image or using multiple image[] fields is rejected."
+                  },
+                  "size": {
+                    "type": "string",
+                    "example": "16:9"
+                  },
+                  "response_format": {
+                    "type": "string",
+                    "enum": ["url", "b64_json"],
+                    "default": "url",
+                    "description": "b64_json returns base64-encoded MP4 data and is a proxy extension."
+                  }
+                },
+                "required": [
+                  "prompt"
+                ]
               }
             }
           }
