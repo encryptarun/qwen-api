@@ -24,7 +24,6 @@
 </p>
 
 > [!IMPORTANT]
-> ### 🚀 Major Update — August 31, 2026
 >
 > - Fixed image generation and editing; added `url` and `b64_json` outputs.
 > - Added text-to-video and image-to-video with URL, base64, or uploaded image input.
