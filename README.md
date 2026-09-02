@@ -139,7 +139,7 @@ For quick testing, you can use this temporary token until it expires.
 - Token:
 
 ```
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYThjOTE1LWRmMzgtNGVmMi1hNWMxLWY1M2IyNjdkYmQzNCIsImxhc3RfcGFzc3dvcmRfY2hhbmdlIjoxNzg4MTU5NTA3LCJleHAiOjE3OTA4MjcxOTN9.qC53XdhjTkA75CPEWo3TdJftU4maThXsgHBzpznCpdA
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMGM4MmNlLTc0YjctNDA1Mi1iMDgyLWVjNTUyZGJjZDIyMiIsImxhc3RfcGFzc3dvcmRfY2hhbmdlIjoxNzg4MzM3MTA4LCJleHAiOjE3OTA5MjkxMzh9.1TGMpiHRRrGb8waUReLYKcPY4zPxHbPcq_mEdRusDcM
 ```
 
 - Expires: 2026-10-01 03:59:53 UTC (2026-10-01 09:29:53 IST, UTC+05:30)
