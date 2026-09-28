@@ -3,7 +3,11 @@
   "info": {
     "title": "Qwen API",
     "version": "1.0.0",
-    "description": "OpenAPI specification for the Qwen API Proxy. Endpoints are OpenAI-compatible and proxied to Qwen services."
+    "description": "OpenAPI specification for the Qwen API Proxy. Endpoints are OpenAI-compatible and proxied to Qwen services.",
+    "contact": {
+      "name": "Support and service updates",
+      "url": "https://github.com/encryptarun/qwen-api/issues"
+    }
   },
   "servers": [
     {
@@ -19,6 +23,22 @@
     }
   ],
   "components": {
+    "responses": {
+      "RateLimitError": {
+        "description": "Upstream rate limit or detected challenge. error.type is rate_limit_error. A challenge is identified by error.code captcha_required; stop automatic retries and use Qwen's normal verification flow. Retry-After is optional and omitted when timing is unknown or the response is a challenge. For streams already started, inspect stream errors as well as the initial HTTP status.",
+        "headers": {
+          "Retry-After": {
+            "description": "Valid upstream retry delay in integer seconds or as an HTTP date. No fixed reset interval is guaranteed.",
+            "schema": { "type": "string" }
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+          }
+        }
+      }
+    },
     "securitySchemes": {
       "BearerAuth": {
         "type": "http",
@@ -606,12 +626,16 @@
     "/models": {
       "get": {
         "summary": "List available models",
+        "description": "Returns the deployed catalog, including upstream models, compatibility aliases, and specialized bridge modes. Static README tables may lag behind upstream changes. Inclusion does not guarantee account access or remaining quota.",
         "security": [
           {
             "BearerAuth": []
           }
         ],
         "responses": {
+          "429": {
+            "$ref": "#/components/responses/RateLimitError"
+          },
           "200": {
             "description": "OK",
             "content": {
@@ -649,6 +673,9 @@
           }
         },
         "responses": {
+          "429": {
+            "$ref": "#/components/responses/RateLimitError"
+          },
           "200": {
             "description": "Validation result",
             "content": {
@@ -685,6 +712,9 @@
           }
         ],
         "responses": {
+          "429": {
+            "$ref": "#/components/responses/RateLimitError"
+          },
           "200": {
             "description": "Validation result",
             "content": {
@@ -722,6 +752,9 @@
           }
         },
         "responses": {
+          "429": {
+            "$ref": "#/components/responses/RateLimitError"
+          },
           "200": {
             "description": "Token refresh result with access_token",
             "content": {
@@ -768,6 +801,9 @@
           }
         ],
         "responses": {
+          "429": {
+            "$ref": "#/components/responses/RateLimitError"
+          },
           "200": {
             "description": "Token refresh result with access_token",
             "content": {
@@ -922,6 +958,9 @@
           }
         },
         "responses": {
+          "429": {
+            "$ref": "#/components/responses/RateLimitError"
+          },
           "200": {
             "description": "OK",
             "content": {
@@ -988,6 +1027,9 @@
           }
         },
         "responses": {
+          "429": {
+            "$ref": "#/components/responses/RateLimitError"
+          },
           "200": {
             "description": "OK",
             "content": {
@@ -1073,6 +1115,9 @@
           }
         },
         "responses": {
+          "429": {
+            "$ref": "#/components/responses/RateLimitError"
+          },
           "200": {
             "description": "OK",
             "content": {
@@ -1157,6 +1202,9 @@
           }
         },
         "responses": {
+          "429": {
+            "$ref": "#/components/responses/RateLimitError"
+          },
           "200": {
             "description": "OK",
             "content": {
@@ -1199,6 +1247,9 @@
           }
         ],
         "responses": {
+          "429": {
+            "$ref": "#/components/responses/RateLimitError"
+          },
           "200": {
             "description": "All chats deleted successfully",
             "content": {
@@ -1279,6 +1330,9 @@
           }
         ],
         "responses": {
+          "429": {
+            "$ref": "#/components/responses/RateLimitError"
+          },
           "200": {
             "description": "All chats deleted successfully",
             "content": {
