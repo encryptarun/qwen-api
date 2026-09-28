@@ -95,8 +95,9 @@ Unknown routes redirect to `https://chat.qwen.ai`. API errors use an OpenAI-styl
 | Model ID                           | Model Name               | 👁️ Vision | 💡 Thinking | 🌐 Search | 🔧 Tools |
 | ---------------------------------- | ------------------------ | --------- | ----------- | --------- | -------- |
 | `qwen3.8-max`                      | Qwen3.8-Max              | ✅        | ✅          | ✅        | ✅       |
-| `qwen3.7-plus`                     | Qwen3.7-Plus             | ✅        | ✅          | ✅        | ✅       |
+| `qwen3.8-omni-flash`               | Qwen3.8-Omni-Flash       | ✅        | ✅          | ✅        | ❌       |
 | `qwen3.7-max`                      | Qwen3.7-Max              | ❌        | ✅          | ❌        | ✅       |
+| `qwen3.7-plus`                     | Qwen3.7-Plus             | ✅        | ✅          | ✅        | ✅       |
 | `qwen3.6-plus`                     | Qwen3.6-Plus             | ✅        | ✅          | ✅        | ✅       |
 | `qwen3.5-plus`                     | Qwen3.5-Plus             | ✅        | ✅          | ✅        | ✅       |
 | `qwen3.5-omni-plus`                | Qwen3.5-Omni-Plus        | ✅        | ❌          | ❌        | ❌       |
