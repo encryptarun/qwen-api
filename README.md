@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://assets.alicdn.com/g/qwenweb/qwen-webui-fe/0.0.201/favicon.png" alt="Qwen Logo" width="120" height="120">
+  <img width="80" height="80" alt="dyn-f7b4415a7b4adba5008fe7d4d5ad0fc7" src="https://github.com/user-attachments/assets/6d6f76a9-c850-460c-87e1-05cd1719f844" />
 
   <h1>Qwen API</h1>
 
