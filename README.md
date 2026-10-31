@@ -133,19 +133,6 @@ const headers = {
 };
 ```
 
-### Temporary Free Token
-
-For quick testing, you can use this temporary token until it expires.
-
-- Token:
-
-```
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM3Y2JkYjMyLWVhYWItNDU4My05MmRkLWIwYTQ2MWI0YzRlYiIsImxhc3RfcGFzc3dvcmRfY2hhbmdlIjoxNzkwNDE0MTY5LCJleHAiOjE3OTU1ODUyMzZ9.ccmwx03Qx3E2n7HqCq10nHkuiVagUCqc5Z85uD7rq6Q
-```
-
-- Expires: 2026-11-25 05:40:36 UTC (2026-11-25 11:10:36 IST, UTC+05:30)
-- Note: This token is for evaluation only and will stop working after the expiration time.
-
 ### How to Get Your Token
 
 To obtain your Qwen API token, follow these steps:
