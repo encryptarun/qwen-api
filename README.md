@@ -128,89 +128,67 @@ The proxy requires a Bearer token containing Qwen credentials:
 
 ```javascript
 const headers = {
-  Authorization: "Bearer YOUR_QWEN_ACCESS_TOKEN",
+  Authorization: "Bearer YOUR_QWEN_API_KEY",
   "Content-Type": "application/json",
 };
 ```
 
+`YOUR_QWEN_API_KEY` is the key copied by the token extractor below: base64 of `access_token|refresh_token`. Qwen access tokens expire after 15 minutes. When the access token inside the key has expired, the proxy gets a new one with the refresh token before forwarding the request. Nothing is stored: the key itself carries everything, so it keeps working until the refresh token expires (about 30 days).
+
+The proxy also accepts:
+
+- A plain Qwen `access_token` (works until it expires, 15 minutes).
+- A plain Qwen `refresh_token`.
+- `access_token|refresh_token` without base64.
+- The same values in an `x-api-key` header instead of `Authorization`.
+
 ### How to Get Your Token
 
-To obtain your Qwen API token, follow these steps:
+To obtain your Qwen API key, follow these steps:
 
 1. **Visit Qwen Chat**: Go to [chat.qwen.ai](https://chat.qwen.ai) and log in to your account
-2. **Run the Token Extractor**: Copy and paste the following JavaScript code into your browser's developer console (press F12 → Console tab):
+2. **Run the Token Extractor**: Save the following line as the URL of a bookmark and click the bookmark on chat.qwen.ai, or paste it into your browser's developer console (press F12 → Console tab):
 
 ```javascript
-javascript: (function () {
-  if (window.location.hostname !== "chat.qwen.ai") {
-    alert("🚀 This code is for chat.qwen.ai");
-    window.open("https://chat.qwen.ai", "_blank");
-    return;
-  }
-  function getApiKeyData() {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      alert("❌ qwen access_token not found !!!");
-      return null;
-    }
-    return token;
-  }
-  async function copyToClipboard(text) {
-    try {
-      await navigator.clipboard.writeText(text);
-      return true;
-    } catch (err) {
-      console.error("❌ Failed to copy to clipboard:", err);
-      const textarea = document.createElement("textarea");
-      textarea.value = text;
-      textarea.style.position = "fixed";
-      textarea.style.opacity = "0";
-      document.body.appendChild(textarea);
-      textarea.focus();
-      textarea.select();
-      const success = document.execCommand("copy");
-      document.body.removeChild(textarea);
-      return success;
-    }
-  }
-  const apiKeyData = getApiKeyData();
-  if (!apiKeyData) return;
-  copyToClipboard(apiKeyData).then((success) => {
-    if (success) {
-      alert("🔑 Qwen access_token copied to clipboard !!! 🎉");
-    } else {
-      prompt("🔰 Qwen access_token:", apiKeyData);
-    }
-  });
-})();
+javascript:(async()=>{if(location.hostname!=="chat.qwen.ai"){location.href="https://chat.qwen.ai";return}try{const j=await(await fetch("https://auth.qwen.ai/api/v2/auths/refresh",{credentials:"include",headers:{source:"web",Version:document.documentElement.innerHTML.match(/qwen-chat-fe\/([\d.]+)\//)?.[1],Timezone:new Date().toString().replace(/\s*\(.+\)$/,""),"x-request-origin":location.origin}})).json(),d=j?.data;if(!j?.success||!d?.access_token||!d?.refresh_token)return alert("❌ Qwen refresh failed: "+(d?.details||"unknown")+". Log in to chat.qwen.ai and try again.");const k=btoa(d.access_token+"|"+d.refresh_token);navigator.clipboard.writeText(k).then(()=>alert("🔑 Qwen API key copied! Auto-refreshes for ~30 days."),()=>prompt("🔰 Qwen API key:",k))}catch(e){alert("❌ "+e.message)}})();
 ```
 
-3. **Get Your Token**: The script will automatically:
-   - Extract your access_token from localStorage
-   - Copy the access_token to your clipboard
+3. **Get Your Key**: The script will automatically:
+   - Ask Qwen's own auth server (`auth.qwen.ai`) for a fresh `access_token` and your `refresh_token`, using your logged-in session. The refresh token is an httpOnly cookie, so JavaScript cannot read it any other way. Nothing is sent anywhere else.
+   - Join them as `access_token|refresh_token`, encode it as base64, and copy it to your clipboard
 
-4. **Use the Token**: The copied token is now ready to use as your `Bearer` token in API requests
+4. **Use the Key**: The copied key is now ready to use as your `Bearer` token in API requests
 
 **Important Notes:**
 
 - ⚠️ This script only works on chat.qwen.ai - make sure you're logged in
-- 🔒 Keep your token secure - it provides access to your Qwen account
-- 🔄 You may need to regenerate the token periodically if it expires
+- 🔒 Keep your key secure - the refresh token inside it gives access to your Qwen account for about 30 days
+- 🔄 Run the script again when the key stops working (the refresh token expired or you logged out)
 
 ### Validate Token (from JS snippet)
 
-Validate the access_token produced by the browser JS snippet above.
+Validate the API key produced by the browser JS snippet above. A plain `access_token` also works. The response includes `timestamp` (access token expiry) and, for keys with a refresh token, `refresh_timestamp` (when you must run the script again).
 
 ```bash
 curl -X POST https://qwen.aikit.club/validate \
   -H "Content-Type: application/json" \
-  -d '{"token": "YOUR_QWEN_ACCESS_TOKEN"}'
+  -d '{"token": "YOUR_QWEN_API_KEY"}'
 ```
 
 Or via GET:
 
 ```bash
-curl "https://qwen.aikit.club/validate?token=YOUR_QWEN_ACCESS_TOKEN"
+curl "https://qwen.aikit.club/validate?token=YOUR_QWEN_API_KEY"
+```
+
+### Refresh Token
+
+You do not need to call this for API requests: the proxy refreshes expired access tokens itself. Use it to get a fresh `access_token` for other tools. Send the API key or a plain `refresh_token`. The response contains `access_token`, `refresh_token`, and `token` (a new API key).
+
+```bash
+curl -X POST https://qwen.aikit.club/refresh \
+  -H "Content-Type: application/json" \
+  -d '{"token": "YOUR_QWEN_API_KEY"}'
 ```
 
 ### Chat Completions
@@ -266,7 +244,7 @@ formData.append("response_format", "b64_json"); // Optional; default is "url"
 const response = await fetch("https://qwen.aikit.club/v1/images/edits", {
   method: "POST",
   headers: {
-    Authorization: "Bearer YOUR_QWEN_ACCESS_TOKEN",
+    Authorization: "Bearer YOUR_QWEN_API_KEY",
   },
   body: formData,
 });
@@ -406,7 +384,7 @@ formData.append("size", "16:9");
 
 const response = await fetch("https://qwen.aikit.club/v1/videos/generations", {
   method: "POST",
-  headers: { Authorization: "Bearer YOUR_QWEN_ACCESS_TOKEN" },
+  headers: { Authorization: "Bearer YOUR_QWEN_API_KEY" },
   body: formData,
 });
 ```
