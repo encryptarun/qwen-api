@@ -42,7 +42,8 @@
     "securitySchemes": {
       "BearerAuth": {
         "type": "http",
-        "scheme": "bearer"
+        "scheme": "bearer",
+        "description": "API key from the README JS snippet: base64 of \"access_token|refresh_token\". The proxy refreshes the expired access token by itself. A plain access_token or refresh_token also works."
       }
     },
     "schemas": {
@@ -488,7 +489,7 @@
         "properties": {
           "token": {
             "type": "string",
-            "description": "Access token produced by the README JS snippet"
+            "description": "API key produced by the README JS snippet (base64 of \"access_token|refresh_token\"), or a plain access_token"
           }
         },
         "required": [
@@ -661,7 +662,7 @@
     },
     "/validate": {
       "post": {
-        "summary": "Validate access token (via request body)",
+        "summary": "Validate API key or access token (via request body)",
         "requestBody": {
           "required": true,
           "content": {
@@ -699,7 +700,7 @@
         }
       },
       "get": {
-        "summary": "Validate access token (via query parameter)",
+        "summary": "Validate API key or access token (via query parameter)",
         "parameters": [
           {
             "in": "query",
@@ -708,7 +709,7 @@
               "type": "string"
             },
             "required": true,
-            "description": "Access token from JS snippet"
+            "description": "API key or access token from JS snippet"
           }
         ],
         "responses": {
@@ -740,7 +741,7 @@
     },
     "/refresh": {
       "post": {
-        "summary": "Refresh authentication token (via request body)",
+        "summary": "Get a fresh access token from the API key or refresh token (via request body)",
         "requestBody": {
           "required": true,
           "content": {
@@ -756,7 +757,7 @@
             "$ref": "#/components/responses/RateLimitError"
           },
           "200": {
-            "description": "Token refresh result with access_token",
+            "description": "New access_token, the refresh_token, and token (a new API key)",
             "content": {
               "application/json": {
                 "schema": {
@@ -766,9 +767,11 @@
                   "success": {
                     "summary": "Successful token refresh",
                     "value": {
-                      "timestamp": "2025-01-21 02:58:14 UTC (2025-01-21 08:28:14 IST, UTC+05:30)",
-                      "expires_at": 1737447494,
-                      "access_token": "eyJh....access_token..."
+                      "timestamp": 1737447494,
+                      "expires_at": "2025-01-21 08:18:14 UTC (2025-01-21 13:48:14 IST, UTC+05:30)",
+                      "access_token": "eyJh....access_token...",
+                      "refresh_token": "eyJh....refresh_token...",
+                      "token": "ZXlKaC4uLi5hY2Nlc3NfdG9rZW4uLi58ZXlKaC4uLi5yZWZyZXNoX3Rva2VuLi4u"
                     }
                   }
                 }
@@ -788,7 +791,7 @@
         }
       },
       "get": {
-        "summary": "Refresh authentication token (via query parameter)",
+        "summary": "Get a fresh access token from the API key or refresh token (via query parameter)",
         "parameters": [
           {
             "in": "query",
@@ -797,7 +800,7 @@
               "type": "string"
             },
             "required": true,
-            "description": "Current token for refresh"
+            "description": "API key from JS snippet (base64 of \"access_token|refresh_token\") or a refresh_token"
           }
         ],
         "responses": {
@@ -805,7 +808,7 @@
             "$ref": "#/components/responses/RateLimitError"
           },
           "200": {
-            "description": "Token refresh result with access_token",
+            "description": "New access_token, the refresh_token, and token (a new API key)",
             "content": {
               "application/json": {
                 "schema": {
@@ -815,9 +818,11 @@
                   "success": {
                     "summary": "Successful token refresh",
                     "value": {
-                      "timestamp": "2025-01-21 02:58:14 UTC (2025-01-21 08:28:14 IST, UTC+05:30)",
-                      "expires_at": 1737447494,
-                      "access_token": "eyJh....access_token..."
+                      "timestamp": 1737447494,
+                      "expires_at": "2025-01-21 08:18:14 UTC (2025-01-21 13:48:14 IST, UTC+05:30)",
+                      "access_token": "eyJh....access_token...",
+                      "refresh_token": "eyJh....refresh_token...",
+                      "token": "ZXlKaC4uLi5hY2Nlc3NfdG9rZW4uLi58ZXlKaC4uLi5yZWZyZXNoX3Rva2VuLi4u"
                     }
                   }
                 }
