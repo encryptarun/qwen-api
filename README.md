@@ -94,14 +94,14 @@ Unknown routes redirect to `https://chat.qwen.ai`. API errors use an OpenAI-styl
 
 | Model ID                           | Model Name               | 👁️ Vision | 💡 Thinking | 🌐 Search | 🔧 Tools |
 | ---------------------------------- | ------------------------ | --------- | ----------- | --------- | -------- |
+| `qwen4-max`                        | Qwen4-Max                | ✅        | ✅          | ✅        | ✅       |
 | `qwen3.8-max`                      | Qwen3.8-Max              | ✅        | ✅          | ✅        | ✅       |
 | `qwen3.8-omni-flash`               | Qwen3.8-Omni-Flash       | ✅        | ✅          | ✅        | ❌       |
 | `qwen3.7-max`                      | Qwen3.7-Max              | ❌        | ✅          | ❌        | ✅       |
 | `qwen3.7-plus`                     | Qwen3.7-Plus             | ✅        | ✅          | ✅        | ✅       |
-| `qwen3.6-plus`                     | Qwen3.6-Plus             | ✅        | ✅          | ✅        | ✅       |
-| `qwen3.5-plus`                     | Qwen3.5-Plus             | ✅        | ✅          | ✅        | ✅       |
 | `qwen3.5-omni-plus`                | Qwen3.5-Omni-Plus        | ✅        | ❌          | ❌        | ❌       |
-| `qwen3-coder-plus`                 | Qwen3-Coder              | ✅        | ❌          | ❌        | ✅       |
+
+> **Retired model alias**: `qwen3-coder-plus` is no longer served upstream. Requests using this ID are routed to `qwen3.7-plus` automatically.
 
 ### Specialized Models
 
@@ -220,7 +220,7 @@ const response = await fetch("https://qwen.aikit.club/v1/chat/completions", {
   method: "POST",
   headers: headers,
   body: JSON.stringify({
-    model: "qwen3.8-max",
+    model: "qwen4-max",
     messages: [{ role: "user", content: "Hello, how are you?" }],
     stream: false,
   }),
@@ -289,7 +289,7 @@ const response = await fetch("https://qwen.aikit.club/v1/chat/completions", {
   method: "POST",
   headers: headers,
   body: JSON.stringify({
-    model: "qwen3.8-max",
+    model: "qwen4-max",
     messages: [{ role: "user", content: "What are the latest AI developments?" }],
     web_search_options: { search_context_size: "medium" },
   }),
@@ -315,7 +315,7 @@ const response = await fetch("https://qwen.aikit.club/v1/chat/completions", {
   method: "POST",
   headers: headers,
   body: JSON.stringify({
-    model: "qwen3.8-max",
+    model: "qwen4-max",
     messages: [{ role: "user", content: "Solve this complex math problem: ..." }],
     reasoning_effort: "high",
   }),
@@ -326,14 +326,14 @@ const response = await fetch("https://qwen.aikit.club/v1/chat/completions", {
 
 Qwen's web API (`chat.qwen.ai`) does not natively support tool/function calling — unlike the official DashScope API, the web reverse API has no built-in tool calling capability. This proxy bridges that gap by implementing **OpenAI-compatible tool calling** via prompt engineering with XML-based parsing, enabling standard OpenAI `tools` and `tool_choice` parameters on the web API.
 
-**Supported model IDs**: `qwen3.8-max`, `qwen3.7-plus`, `qwen3.7-max`, `qwen3.6-plus`, `qwen3.5-plus`, `qwen3-coder-plus`
+**Supported model IDs**: `qwen4-max`, `qwen3.8-max`, `qwen3.7-max`, `qwen3.7-plus` (plus the retired alias `qwen3-coder-plus`)
 
 ```javascript
 const response = await fetch("https://qwen.aikit.club/v1/chat/completions", {
   method: "POST",
   headers: headers,
   body: JSON.stringify({
-    model: "qwen3.6-plus",
+    model: "qwen3.7-plus",
     messages: [{ role: "user", content: "What's the weather in Tokyo?" }],
     tools: [
       {
@@ -690,7 +690,7 @@ const response = await fetch("https://qwen.aikit.club/v1/chat/completions", {
   method: "POST",
   headers: headers,
   body: JSON.stringify({
-    model: "qwen3.8-max",
+    model: "qwen4-max",
     messages: [
       {
         role: "user",
@@ -718,7 +718,7 @@ const response = await fetch("https://qwen.aikit.club/v1/chat/completions", {
   method: "POST",
   headers: headers,
   body: JSON.stringify({
-    model: "qwen3.8-max",
+    model: "qwen4-max",
     messages: [
       {
         role: "user",
@@ -747,7 +747,7 @@ const response = await fetch("https://qwen.aikit.club/v1/chat/completions", {
   method: "POST",
   headers: headers,
   body: JSON.stringify({
-    model: "qwen3.8-max",
+    model: "qwen4-max",
     messages: [
       {
         role: "user",
