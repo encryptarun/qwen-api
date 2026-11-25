@@ -298,7 +298,7 @@
         "properties": {
           "model": {
             "type": "string",
-            "description": "Model ID (e.g., qwen3.8-max, qwen3-coder-plus, qwen-deep-research)"
+            "description": "Model ID (e.g., qwen4-max, qwen3.8-max, qwen3.7-plus, qwen-deep-research)"
           },
           "messages": {
             "type": "array",
@@ -856,7 +856,7 @@
                 "basic": {
                   "summary": "Basic chat completion",
                   "value": {
-                    "model": "qwen3.8-max",
+                    "model": "qwen4-max",
                     "messages": [
                       {
                         "role": "user",
@@ -869,7 +869,7 @@
                 "web_search": {
                   "summary": "Chat with web search tool",
                   "value": {
-                    "model": "qwen3.8-max",
+                    "model": "qwen4-max",
                     "tools": [
                       {
                         "type": "web_search"
@@ -887,7 +887,7 @@
                 "thinking": {
                   "summary": "Thinking mode",
                   "value": {
-                    "model": "qwen3.8-max",
+                    "model": "qwen4-max",
                     "reasoning_effort": "high",
                     "messages": [
                       {
@@ -899,9 +899,9 @@
                   }
                 },
                 "coder": {
-                  "summary": "Code generation (qwen3-coder-plus)",
+                  "summary": "Code generation (qwen3.7-plus)",
                   "value": {
-                    "model": "qwen3-coder-plus",
+                    "model": "qwen3.7-plus",
                     "tools": [
                       {
                         "type": "code"
@@ -919,7 +919,7 @@
                 "multimodal": {
                   "summary": "Vision-style multimodal",
                   "value": {
-                    "model": "qwen3.8-max",
+                    "model": "qwen4-max",
                     "messages": [
                       {
                         "role": "user",
